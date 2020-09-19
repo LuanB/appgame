@@ -15,18 +15,11 @@ import {
   ScrollView,
   View,
   Text,
-  StatusBar,
   TouchableOpacity,
   Button,
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {FlatGrid} from 'react-native-super-grid';
 
 const numRows = 10;
@@ -41,7 +34,6 @@ const operations = [
   [-1, -1],
   [1, 0],
   [-1, 0],
-  ,
 ];
 
 const App = () => {
@@ -52,6 +44,8 @@ const App = () => {
     }
     return rows;
   });
+
+  const initialState = [...grid];
 
   const [running, setRunning] = useState(false);
 
@@ -86,116 +80,84 @@ const App = () => {
         }
       });
     });
-
-    // simulate
-
-    setTimeout(runSimulation, 1000);
+    setTimeout(runSimulation, 500);
   }, []);
 
+  const onReset = () => {
+    const rows = [];
+    for (let i = 0; i < numRows; i++) {
+      rows.push(Array.from(Array(numCols), () => 0));
+    }
+
+    setGrid(rows);
+  };
+
   return (
-    <>
-      <Button
-        onPress={() => {
-          setRunning(!running);
-          if (!running) {
-            runningRef.current = true;
-            runSimulation();
-          }
-        }}
-        title={running ? 'Stop' : 'Start'}
-        color="#841584"
-        accessibilityLabel="Start game"
-      />
+    <SafeAreaView style={{flex: 1}}>
+      <ScrollView>
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          <FlatGrid
+            itemDimension={25}
+            data={grid}
+            renderItem={({item, index}) => {
+              console.log('item is ', item);
+              return item.map((col, colIndx) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    const newGrid = produce(grid, (gridCopy) => {
+                      gridCopy[index][colIndx] = grid[index][colIndx] ? 0 : 1;
+                    });
+                    console.log(' grid is ', grid);
+                    setGrid(newGrid);
+                  }}>
+                  <View
+                    key={`${col}-${colIndx}`}
+                    style={{
+                      width: 35,
+                      height: 35,
+                      backgroundColor: grid[index][colIndx]
+                        ? 'pink'
+                        : undefined,
+                      borderWidth: 1,
+                    }}>
+                    <Text>
+                      {index} - {colIndx}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              ));
+            }}
+          />
 
-      <FlatGrid
-        itemDimension={25}
-        data={grid}
-        renderItem={({item, index}) => {
-          console.log('item is ', item);
-          return item.map((col, colIndx) => (
-            <TouchableOpacity
+          <View>
+            <Text>Simulator is {running ? 'running' : 'has stopped'}</Text>
+          </View>
+          <View style={{width: 200, paddingVertical: 10}}>
+            <Button
               onPress={() => {
-                const newGrid = produce(grid, (gridCopy) => {
-                  gridCopy[index][colIndx] = grid[index][colIndx] ? 0 : 1;
-                });
-                console.log(' grid is ', grid);
-                setGrid(newGrid);
-              }}>
-              <View
-                key={`${col}-${colIndx}`}
-                style={{
-                  width: 35,
-                  height: 35,
-                  backgroundColor: grid[index][colIndx] ? 'pink' : undefined,
-                  borderWidth: 1,
-                }}>
-                <Text>
-                  {index} - {colIndx}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ));
-        }}
-      />
-      <View>
-        <Text>Simulator is {running ? 'running' : 'has stopped'}</Text>
-      </View>
-
-      {/* </View> {grid.map((rows, i) => */}
-      {/* //   rows.map((col, colIndx) => (
-        //     <View
-        //       key={`${i}-${colIndx}`}
-        //       style={{
-        //         width: 20,
-        //         height: 20,
-        //         backgroundColor: grid[i][colIndx] ? 'pink' : undefined,
-        //         borderWidth: 1,
-        //       }}
-        //     />
-        //   )),
-        // )} */}
-      {/* </View> */}
-    </>
+                setRunning(!running);
+                if (!running) {
+                  runningRef.current = true;
+                  runSimulation();
+                }
+              }}
+              title={running ? 'Stop' : 'Start'}
+              color="#841584"
+              accessibilityLabel="Start game"
+            />
+          </View>
+          <View style={{width: 200}}>
+            <Button
+              onPress={onReset}
+              title="Reset"
+              color="#841584"
+              accessibilityLabel="Start game"
+            />
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
 
 export default App;

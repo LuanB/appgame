@@ -24,6 +24,7 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import {FlatGrid} from 'react-native-super-grid';
 
 const numRows = 50;
 const numCols = 50;
@@ -39,21 +40,35 @@ const App = () => {
 
   return (
     <>
-      <View>
-        {grid.map((rows, i) =>
-          rows.map((col, colIndx) => (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <FlatGrid
+          itemDimension={25}
+          data={grid}
+          renderItem={({cell}) => (
             <View
-              key={`${i}-${colIndx}`}
               style={{
-                width: 20,
-                height: 20,
-                backgroundColor: grid[i][colIndx] ? 'pink' : undefined,
-                border: 'solid 1px black',
+                width: 25,
+                height: 25,
+                backgroundColor: 'pink',
+                borderWidth: 1,
               }}>
-              <Text>cell</Text>
+              <Text>{cell}</Text>
             </View>
-          )),
-        )}
+          )}
+        />
+        {/* </View> {grid.map((rows, i) => */}
+        {/* //   rows.map((col, colIndx) => (
+        //     <View
+        //       key={`${i}-${colIndx}`}
+        //       style={{
+        //         width: 20,
+        //         height: 20,
+        //         backgroundColor: grid[i][colIndx] ? 'pink' : undefined,
+        //         borderWidth: 1,
+        //       }}
+        //     />
+        //   )),
+        // )} */}
       </View>
 
       <Text>Test</Text>

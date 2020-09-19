@@ -8,6 +8,7 @@
  */
 
 import React, {useState} from 'react';
+import produce from 'immer';
 import {
   SafeAreaView,
   StyleSheet,
@@ -15,6 +16,7 @@ import {
   View,
   Text,
   StatusBar,
+  TouchableOpacity,
 } from 'react-native';
 
 import {
@@ -26,8 +28,8 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import {FlatGrid} from 'react-native-super-grid';
 
-const numRows = 50;
-const numCols = 50;
+const numRows = 10;
+const numCols = 10;
 
 const App = () => {
   const [grid, setGrid] = useState(() => {
@@ -40,24 +42,39 @@ const App = () => {
 
   return (
     <>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <FlatGrid
-          itemDimension={25}
-          data={grid}
-          renderItem={({cell}) => (
-            <View
-              style={{
-                width: 25,
-                height: 25,
-                backgroundColor: 'pink',
-                borderWidth: 1,
+      <FlatGrid
+        itemDimension={25}
+        data={grid}
+        renderItem={({item, index}) => {
+          console.log('item is ', item);
+          return item.map((col, colIndx) => (
+            <TouchableOpacity
+              onPress={() => {
+                const newGrid = produce(grid, (gridCopy) => {
+                  gridCopy[index][colIndx] = grid[index][colIndx] ? 0 : 1;
+                });
+                console.log(' grid is ', grid);
+                setGrid(newGrid);
               }}>
-              <Text>{cell}</Text>
-            </View>
-          )}
-        />
-        {/* </View> {grid.map((rows, i) => */}
-        {/* //   rows.map((col, colIndx) => (
+              <View
+                key={`${col}-${colIndx}`}
+                style={{
+                  width: 35,
+                  height: 35,
+                  backgroundColor: grid[index][colIndx] ? 'pink' : undefined,
+                  borderWidth: 1,
+                }}>
+                <Text>
+                  {index} - {colIndx}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ));
+        }}
+      />
+
+      {/* </View> {grid.map((rows, i) => */}
+      {/* //   rows.map((col, colIndx) => (
         //     <View
         //       key={`${i}-${colIndx}`}
         //       style={{
@@ -69,9 +86,7 @@ const App = () => {
         //     />
         //   )),
         // )} */}
-      </View>
-
-      <Text>Test</Text>
+      {/* </View> */}
     </>
   );
 };

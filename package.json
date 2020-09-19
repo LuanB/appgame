@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "immer": "^7.0.9",
     "react": "16.13.1",
     "react-native": "0.63.2",
     "react-native-super-grid": "^4.0.3"

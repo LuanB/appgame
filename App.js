@@ -17,6 +17,7 @@ import {
   Text,
   StatusBar,
   TouchableOpacity,
+  Button,
 } from 'react-native';
 
 import {
@@ -40,8 +41,17 @@ const App = () => {
     return rows;
   });
 
+  const [running, setRunning] = useState(false);
+
   return (
     <>
+      <Button
+        onPress={() => setRunning(!running)}
+        title={running ? 'Stop' : 'Start'}
+        color="#841584"
+        accessibilityLabel="Start game"
+      />
+
       <FlatGrid
         itemDimension={25}
         data={grid}

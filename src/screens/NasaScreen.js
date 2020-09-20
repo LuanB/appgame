@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Button} from 'react-native';
 import axios from 'axios';
 
 export default function NasaScreen() {
@@ -29,14 +29,11 @@ export default function NasaScreen() {
 
   return (
     <View>
-      {isError && <div>Something went wrong ...</div>}
+      {isError && <Text>Something went wrong ...</Text>}
 
-      {isLoading ? <div>Loading ...</div> : <ul>test</ul>}
+      {isLoading ? <Text>Loading ...</Text> : <Text>test</Text>}
 
-      <button type="button" onClick={fetchData}>
-        Get Nasa Picture of the Day
-      </button>
-      <Text />
+      <Button type="button" title="NASA PIC" onClick={fetchData} />
     </View>
   );
 }

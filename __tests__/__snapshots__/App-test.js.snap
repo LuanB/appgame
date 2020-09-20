@@ -173,6 +173,7 @@ exports[`<App /> should match snapshot 1`] = `
               Object {},
             ]
           }
+          testID="SimulatorGrid"
           updateCellsBatchingPeriod={50}
           viewabilityConfigCallbackPairs={Array []}
           windowSize={21}

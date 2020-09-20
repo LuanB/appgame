@@ -19,10 +19,14 @@ describe('<App />', () => {
     const result = render(<App />).toJSON();
     expect(result).toMatchSnapshot();
   });
-  it('should render correctly the components', () => {
+  it('should render correctly the components - Run, Rest and Simulator grid', () => {
     const {getByTestId, getByText, queryByTestId, toJSON} = render(<App />);
 
     const btnRun = getByTestId('btnRun');
     expect(btnRun).toBeDefined();
+    const btnRest = getByTestId('btnReset');
+    expect(btnRest).toBeDefined();
+    const simulatorGrid = getByTestId('SimulatorGrid');
+    expect(simulatorGrid).toBeDefined();
   });
 });

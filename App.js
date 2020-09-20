@@ -97,6 +97,7 @@ const App = () => {
       <ScrollView>
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <FlatGrid
+            testID="SimulatorGrid"
             itemDimension={25}
             data={grid}
             renderItem={({item, index}) => {

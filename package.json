@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test:update-snapshots": "jest -u"
   },
   "dependencies": {
     "immer": "^7.0.9",

@@ -100,7 +100,6 @@ const App = () => {
             itemDimension={25}
             data={grid}
             renderItem={({item, index}) => {
-              console.log('item is ', item);
               return item.map((col, colIndx) => (
                 <TouchableOpacity
                   key={`${col}-${colIndx}`}
@@ -108,7 +107,6 @@ const App = () => {
                     const newGrid = produce(grid, (gridCopy) => {
                       gridCopy[index][colIndx] = grid[index][colIndx] ? 0 : 1;
                     });
-                    console.log(' grid is ', grid);
                     setGrid(newGrid);
                   }}>
                   <View
@@ -134,6 +132,7 @@ const App = () => {
           </View>
           <View style={{width: 200, paddingVertical: 10}}>
             <Button
+              testID="btnRun"
               onPress={() => {
                 setRunning(!running);
                 if (!running) {
@@ -148,6 +147,7 @@ const App = () => {
           </View>
           <View style={{width: 200}}>
             <Button
+              testID="btnReset"
               onPress={onReset}
               title="Reset"
               color="#841584"

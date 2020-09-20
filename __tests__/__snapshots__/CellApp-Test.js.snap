@@ -3672,6 +3672,7 @@ exports[`renders correctly 1`] = `
                 "opacity": 1,
               }
             }
+            testID="btnRun"
           >
             <View
               style={
@@ -3725,6 +3726,7 @@ exports[`renders correctly 1`] = `
                 "opacity": 1,
               }
             }
+            testID="btnReset"
           >
             <View
               style={

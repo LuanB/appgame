@@ -19,4 +19,10 @@ describe('<App />', () => {
     const result = render(<App />).toJSON();
     expect(result).toMatchSnapshot();
   });
+  it('should render correctly the components', () => {
+    const {getByTestId, getByText, queryByTestId, toJSON} = render(<App />);
+
+    const btnRun = getByTestId('btnRun');
+    expect(btnRun).toBeDefined();
+  });
 });

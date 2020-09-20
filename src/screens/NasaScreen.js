@@ -3,16 +3,32 @@ import {View, Text} from 'react-native';
 import axios from 'axios';
 
 export default function NasaScreen() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState({});
+  const [data, setData] = useState({hits: []});
+  const [query, setQuery] = useState('redux');
+  const [url, setUrl] = useState(
+    'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY',
+  );
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-  useEffect(async () => {
-    const result = await axios(
-      'https://hn.algolia.com/api/v1/search?query=redux',
-    );
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsError(false);
+      setIsLoading(true);
 
-    setData(result.data);
-  }, []);
+      try {
+        const result = await axios(url);
+
+        setData(result.data);
+      } catch (error) {
+        setIsError(true);
+      }
+
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, [url]);
 
   return (
     <View>

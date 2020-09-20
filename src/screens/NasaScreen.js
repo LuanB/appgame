@@ -11,27 +11,31 @@ export default function NasaScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsError(false);
-      setIsLoading(true);
+  const fetchData = async () => {
+    setIsError(false);
+    setIsLoading(true);
 
-      try {
-        const result = await axios(url);
+    try {
+      const result = await axios(url);
 
-        setData(result.data);
-      } catch (error) {
-        setIsError(true);
-      }
+      setData(result.data);
+      console.log('data is ', data);
+    } catch (error) {
+      setIsError(true);
+    }
 
-      setIsLoading(false);
-    };
-
-    fetchData();
-  }, [url]);
+    setIsLoading(false);
+  };
 
   return (
     <View>
+      {isError && <div>Something went wrong ...</div>}
+
+      {isLoading ? <div>Loading ...</div> : <ul>test</ul>}
+
+      <button type="button" onClick={fetchData}>
+        Get Nasa Picture of the Day
+      </button>
       <Text />
     </View>
   );

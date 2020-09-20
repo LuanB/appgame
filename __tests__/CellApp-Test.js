@@ -4,6 +4,6 @@ import renderer from 'react-test-renderer';
 import CellScreen from '../src/screens/CellScreen';
 
 test('renders correctly', () => {
-  const tree = renderer.create(<App />).toJSON();
+  const tree = renderer.create(<CellScreen />).toJSON();
   expect(tree).toMatchSnapshot();
 });

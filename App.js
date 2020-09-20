@@ -36,16 +36,16 @@ const operations = [
   [-1, 0],
 ];
 
-const App = () => {
-  const [grid, setGrid] = useState(() => {
-    const rows = [];
-    for (let i = 0; i < numRows; i++) {
-      rows.push(Array.from(Array(numCols), () => 0));
-    }
-    return rows;
-  });
+const initialState = () => {
+  const rows = [];
+  for (let i = 0; i < numRows; i++) {
+    rows.push(Array.from(Array(numCols), () => 0));
+  }
+  return rows;
+};
 
-  const initialState = [...grid];
+const App = () => {
+  const [grid, setGrid] = useState(initialState);
 
   const [running, setRunning] = useState(false);
 
@@ -103,6 +103,7 @@ const App = () => {
               console.log('item is ', item);
               return item.map((col, colIndx) => (
                 <TouchableOpacity
+                  key={`${col}-${colIndx}`}
                   onPress={() => {
                     const newGrid = produce(grid, (gridCopy) => {
                       gridCopy[index][colIndx] = grid[index][colIndx] ? 0 : 1;
@@ -111,7 +112,6 @@ const App = () => {
                     setGrid(newGrid);
                   }}>
                   <View
-                    key={`${col}-${colIndx}`}
                     style={{
                       width: 35,
                       height: 35,

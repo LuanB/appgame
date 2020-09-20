@@ -23,12 +23,14 @@
     "eslint": "^7.9.0",
     "jest": "^26.4.2",
     "metro-react-native-babel-preset": "^0.63.0",
-    "react-test-renderer": "16.13.1"
+    "react-native-testing-library": "^6.0.0",
+    "react-test-renderer": "^16.13.1"
   },
   "jest": {
     "preset": "react-native",
-    "snapshotSerializers": [
-      "./node_modules/jest-serializer-enzyme"
-    ]
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base)"
+    ],
+    "automock": false
   }
 }

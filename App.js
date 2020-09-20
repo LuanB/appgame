@@ -26,6 +26,7 @@ import {
 
 import NasaScreen from './src/screens/NasaScreen';
 import CellScreen from './src/screens/CellScreen';
+import {SafeAreaView} from 'react-native';
 
 const MaterialBottomTabs = createMaterialBottomTabNavigator();
 
@@ -53,7 +54,7 @@ const App = () => {
           options={{
             tabBarLabel: 'Home',
             tabBarIcon: () => (
-              <Icon style={[{color: 'white'}]} size={25} name={'home'} />
+              <Icon style={[{color: 'blue'}]} size={25} name={'home'} />
             ),
           }}
         />
@@ -63,7 +64,7 @@ const App = () => {
           options={{
             tabBarLabel: 'Profile',
             tabBarIcon: () => (
-              <Icon style={[{color: 'white'}]} size={25} name={'human'} />
+              <Icon style={[{color: 'blue'}]} size={25} name={'human'} />
             ),
           }}
         />
@@ -74,7 +75,7 @@ const App = () => {
   return (
     <AppearanceProvider>
       <NavigationContainer theme={colorScheme == 'dark' ? DarkTheme : MyTheme}>
-        {createBottomTabs()}
+        <SafeAreaView style={{flex: 1}}>{createBottomTabs()}</SafeAreaView>
       </NavigationContainer>
     </AppearanceProvider>
   );

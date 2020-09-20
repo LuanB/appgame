@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, StyleSheet} from 'react-native';
 import axios from 'axios';
 import NasaContainer from '../components/NasaContainer';
 
@@ -28,14 +28,29 @@ export default function NasaScreen() {
   };
 
   return (
-    <View style={{flex: 1, justifyContent: 'flex-end', margin: 5}}>
-      {isError && <Text>Something went wrong ...</Text>}
+    <View style={styles.viewContainer}>
+      {isError && (
+        <Text style={styles.ErrorLoadingText}>Something went wrong ...</Text>
+      )}
 
-      {isLoading ? <Text>Loading ...</Text> : <NasaContainer data={data} />}
+      {isLoading ? (
+        <Text style={styles.ErrorLoadingText}>Loading ...</Text>
+      ) : (
+        <NasaContainer data={data} />
+      )}
 
-      <View style={{marginBottom: 20}}>
+      <View style={styles.nasaBtn}>
         <Button type="button" title="NASA PIC" onPress={fetchData} />
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  ErrorLoadingText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  viewContainer: {flex: 1, justifyContent: 'flex-end', margin: 5},
+  nasaBtn: {marginBottom: 20},
+});
